@@ -6,12 +6,12 @@ import os.path
 import datetime
 import numpy as np
 d1 = datetime.datetime(2021, 2, 28)
-path_to_file = "d:\KALBE\FPP.xlsb"
+# path_to_file = "d:\KALBE\FPP.xlsb"
 # date_cols = ["TGL"]
-# df = pd.read_excel(r'd:\KALBE\FPPFKP.xlsx', index_col=None,
-#                    sheet_name='FPP', usecols="B,D,O", skiprows=4)
-df = pd.read_excel(path_to_file, index_col=None, na_values=[
-                   'NA'], engine='pyxlsb', sheet_name='FPP', usecols="B,D,O", skiprows=4)
+df = pd.read_excel(r'd:\KALBE\FPPFKP.xlsx', index_col=None,
+                   sheet_name='SHP_Receiving_Transaction_Su_')
+# df = pd.read_excel(path_to_file, index_col=None, na_values=[
+#                    'NA'], engine='pyxlsb', sheet_name='FPP', usecols="B,D,O", skiprows=4)
 
 print(df)
 # print("setelah format tanggal")
@@ -30,34 +30,35 @@ print(df)
 #             (df['messageDate'].dt.hour <= 15)
 # pd.concat([df])
 
-# mask = df['TGL'].map(lambda x: x.month) == 3
+# mask = df['TGL'].map(lambda x: x.month) == 5
 # df_with_good_dates = df.loc[mask]
+# print("Tes")
+# print(df_with_good_dates)
+# # X = df_with_good_dates.count()
 
-# X = df_with_good_dates.count()
-
-# print(X)
-# print(df['tier1'].drop_duplicates())
-# print(df.tier1.sort_values().count())
-# bool_series = pd.notnull(df["tier1"])
-# print("biar ga bingung ya kan")
-# print(df.count())
-# # print(df.tier1['planning'].count())
-# print(df.loc[df['tier1'] == 'planning'].count())
-# print(df.loc[df['tier1'] == 'ADMINISTRASI'].count())
-# print(df.loc[df['tier1'].isNull()].count())
-# print(df[bool_series].count())
-planning = df_with_good_dates.loc[df_with_good_dates['tier1'] == 'planning'].count()[
-    0]
-ADMINISTRASI = df_with_good_dates.loc[df_with_good_dates['tier1'] == 'ADMINISTRASI'].count()[
-    0]
-
-
-labels = ['planning', 'ADMINISTRASI']
-values = [planning, ADMINISTRASI]
+# # print(X)
+# # print(df['tier1'].drop_duplicates())
+# # print(df.tier1.sort_values().count())
+# # bool_series = pd.notnull(df["tier1"])
+# # print("biar ga bingung ya kan")
+# # print(df.count())
+# # # print(df.tier1['planning'].count())
+# # print(df.loc[df['tier1'] == 'planning'].count())
+# # print(df.loc[df['tier1'] == 'ADMINISTRASI'].count())
+# # print(df.loc[df['tier1'].isNull()].count())
+# # print(df[bool_series].count())
+# planning = df_with_good_dates.loc[df_with_good_dates['tier1'] == 'planning'].count()[
+#     0]
+# ADMINISTRASI = df_with_good_dates.loc[df_with_good_dates['tier1'] == 'ADMINISTRASI'].count()[
+#     0]
 
 
-bars = plt.bar(labels, values)
-plt.bar(labels, values, color=['purple', 'blue'])
-plt.xticks(labels, labels, rotation='vertical')
-plt.title('DATA FPP', fontdict={'fontweight': 'bold', 'fontsize': 18})
-plt.show()
+# labels = ['planning', 'ADMINISTRASI']
+# values = [planning, ADMINISTRASI]
+
+
+# bars = plt.bar(labels, values)
+# plt.bar(labels, values, color=['purple', 'blue'])
+# plt.xticks(labels, labels, rotation='vertical')
+# plt.title('DATA FPP', fontdict={'fontweight': 'bold', 'fontsize': 18})
+# # plt.show()
