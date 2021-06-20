@@ -1,1 +1,1 @@
- # self.input.textChanged.connect(self.update_figure)
+df['TGL'] = pd.to_datetime(df.TGL, format="%Y-%m-%d")

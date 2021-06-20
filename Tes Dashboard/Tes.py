@@ -1,4 +1,4 @@
-from tes2 import Ui_MainWindow
+# from tes2 import Ui_MainWindow
 from pyxlsb import open_workbook as open_xlsb
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -9,7 +9,7 @@ d1 = datetime.datetime(2021, 2, 28)
 # path_to_file = "d:\KALBE\FPP.xlsb"
 # date_cols = ["TGL"]
 df = pd.read_excel(r'd:\KALBE\FPPFKP.xlsx', index_col=None,
-                   sheet_name='SHP_Receiving_Transaction_Su_')
+                   sheet_name='FPP', skiprows=4, usecols="B,D,O")
 # df = pd.read_excel(path_to_file, index_col=None, na_values=[
 #                    'NA'], engine='pyxlsb', sheet_name='FPP', usecols="B,D,O", skiprows=4)
 
@@ -30,10 +30,16 @@ print(df)
 #             (df['messageDate'].dt.hour <= 15)
 # pd.concat([df])
 
-# mask = df['TGL'].map(lambda x: x.month) == 5
-# df_with_good_dates = df.loc[mask]
-# print("Tes")
-# print(df_with_good_dates)
+mask = df['TGL'].map(lambda x: x.month) == 1
+df_with_good_dates = df.loc[mask]
+print(df_with_good_dates)
+month_list = [i.strftime("%b-%y")
+              for i in df_with_good_dates['TGL']]
+
+print("Tes")
+
+print(sorted(set(month_list)))
+
 # # X = df_with_good_dates.count()
 
 # # print(X)

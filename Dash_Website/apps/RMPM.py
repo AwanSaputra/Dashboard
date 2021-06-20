@@ -6,7 +6,7 @@ import pandas as pd
 import pathlib
 from app import app
 
-from apps.chartRMPM import summary
+from apps.chartRMPM import summary, FPP
 
 
 layout = html.Div(children=[
@@ -39,5 +39,7 @@ layout = html.Div(children=[
 def display_page(label):
     if label == 'SUMMARY':
         return summary.layout
+    if label == 'FPP':
+        return FPP.layout
     else:
         return "404 Page Error! Please choose a link"
