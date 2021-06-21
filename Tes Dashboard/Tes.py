@@ -37,9 +37,21 @@ month_list = [i.strftime("%b-%y")
               for i in df_with_good_dates['TGL']]
 
 print("Tes")
+x = df_with_good_dates[df_with_good_dates.tier1 == 'planning'].groupby(
+    [df_with_good_dates.TGL.dt.year, df_with_good_dates.TGL.dt.month]).agg({"tier1": "count"}).values.tolist()
 
+var = [i[0] for i in x]
+print(var)
+
+y = df_with_good_dates[df_with_good_dates.tier1 == 'ADMINISTRASI'].groupby(
+    [df_with_good_dates.TGL.dt.year, df_with_good_dates.TGL.dt.month]).count().values.tolist()
 print(sorted(set(month_list)))
-
+print("tes2")
+print(x)
+print(y)
+print("tes3")
+print(df_with_good_dates[df_with_good_dates.tier1 == 'planning'].groupby(
+    [df_with_good_dates.TGL.dt.year, df_with_good_dates.TGL.dt.month]).count())
 # # X = df_with_good_dates.count()
 
 # # print(X)

@@ -88,25 +88,46 @@ def update_graph1(contents, filename):
         contents = contents[0]
         filename = filename[0]
         df = parse_data(contents, filename)
-        planning = df.loc[df['tier1'] == 'planning'].count()[0]
-        ADMINISTRASI = df.loc[df['tier1'] == 'ADMINISTRASI'].count()[0]
-        NaN = df['tier1'].isnull().values.any().sum()
-        mask = df['TGL'].map(lambda x: x.month) == 2
+        # ADMINISTRASI = df.loc[df['tier1'] == 'ADMINISTRASI'].count()[0]
+        # NaN = df['tier1'].isnull().values.any().sum()
+        mask = df['TGL'].map(lambda x: x.month) == 8
         df_with_good_dates = df.loc[mask]
-        print(df_with_good_dates)
         month_list = [i.strftime("%b-%y")
                       for i in df_with_good_dates['TGL']]
-
         labels = sorted(set(month_list))
-        # c = df_with_good_dates[df_with_good_dates.tier1 ==
-        #                        'planning'].groupby(['tier1', 'TGL']).TGL.count()
-        # print(c)
-        values = [planning, ADMINISTRASI, NaN]
+        planning = df_with_good_dates[df_with_good_dates.tier1 == 'planning'].groupby(
+            [df_with_good_dates.TGL.dt.year, df_with_good_dates.TGL.dt.month]).agg({"tier1": "count"}).values
+        var = [i[0] for i in planning]
+        ADMINISTRASI = df_with_good_dates[df_with_good_dates.tier1 == 'ADMINISTRASI'].groupby(
+            [df_with_good_dates.TGL.dt.year, df_with_good_dates.TGL.dt.month]).agg({"tier1": "count"}).values
+        var1 = [i[0] for i in ADMINISTRASI]
+
+        notnulindex = df_with_good_dates.dropna().index
+        print(notnulindex)
+        print(df_with_good_dates.dropna())
+        print("diatas dropna")
+        print(df_with_good_dates)
+        varA = df_with_good_dates.loc[~df_with_good_dates.index.isin(
+            notnulindex)]
+        print("VarA :")
+        print(varA)
+        NaN = varA.groupby(
+            [df_with_good_dates.TGL.dt.year, df_with_good_dates.TGL.dt.month]).agg({"NO. PO": "count"}).values
+        var2 = [i[0] for i in NaN]
+        print("NAN")
+        print(NaN)
+        print("VAR2")
+        print(var2)
+        print("tes")
+        print(df_with_good_dates['TGL'].groupby(
+            [df_with_good_dates.TGL.dt.year, df_with_good_dates.TGL.dt.month]).agg('count').to_list())
+        print("tes2")
+        print(df_with_good_dates)
         layout = go.Layout(title='Trend Category Per Bulan', barmode='stack')
         fig = go.Figure(data=[
-            go.Bar(name='Planning', x=labels, y=values),
-            go.Bar(name='ADMINISTRASI', x=labels, y=values),
-            go.Bar(name='NaN', x=labels, y=values)
+            go.Bar(name='Planning', x=labels, y=var),
+            go.Bar(name='ADMINISTRASI', x=labels, y=var1),
+            go.Bar(name='NaN', x=labels, y=var2)
         ])
 
     return fig
