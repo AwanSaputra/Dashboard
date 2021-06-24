@@ -19,11 +19,11 @@ app.layout = html.Div(children=[
     html.Div([
         dcc.Location(id='url', refresh=False),
         html.Div([
-            dcc.Link('RM/PM |', href='/apps/RMPM'),
             dcc.Link('PROC |', href='/apps/PROC'),
+            dcc.Link('RM/PM-SS |', href='/apps/RMPMSS'),
+            dcc.Link('RM/PM |', href='/apps/RMPM'),
             dcc.Link('CLEARANCE |', href='/apps/CLEARANCE'),
             dcc.Link('INDIRECT MKT |', href='/apps/INMKT'),
-            dcc.Link('RM/PM-SS |', href='/apps/RMPMSS'),
             dcc.Link('INDIRECT NON MKT ', href='/apps/NONMKT'),
         ], className="row"),
         html.Div(id='page-content', children=[]),

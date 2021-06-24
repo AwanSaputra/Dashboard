@@ -36,6 +36,7 @@ layout = html.Div([
         # Allow multiple files to be uploaded
         multiple=True
     ),
+    html.Div(id='filename-summary'),
     html.Div(dcc.Graph(
         id='Mygraph1',
     ), style={
@@ -100,6 +101,25 @@ def parse_data(contents, filename):
 
     print(df)
     return df
+
+
+@app.callback(Output('filename-summary', 'children'),
+              [
+    Input('upload-data', 'contents'),
+    Input('upload-data', 'filename')
+]
+)
+def update_output2(contents, filename):
+    string_prefix = 'You have selected: '
+    table = html.Div()
+    if contents:
+        contents = contents[0]
+        filename = filename[0]
+        string_prefix = string_prefix + filename
+    if len(string_prefix) == len('You have selected: '):
+        return 'Select a file to see it displayed here'
+    else:
+        return string_prefix
 
 
 @app.callback(Output('Mygraph1', 'figure'),

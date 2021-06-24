@@ -6,18 +6,17 @@ import pandas as pd
 import pathlib
 from app import app
 
-from apps.chartRMPM import summary, FPP
+from apps.chartRMPM import FPP
 
 
 layout = html.Div(children=[
     html.Div(dcc.Dropdown(
         id='dropdown',
         options=[
-            {'label': 'FPP', 'value': 'FPP'},
+            {'label': 'FPP', 'value': 'a'},
             {'label': 'FKP', 'value': 'FKP'},
-            {'label': 'SUMMARY', 'value': 'SUMMARY'}
         ],
-        value='SUMMARY'), style={
+        value=''), style={
             "display": "inline-block",
             "width": "20%"
     }),
@@ -37,9 +36,9 @@ layout = html.Div(children=[
 @ app.callback(Output('chart-content', 'children'),
                [Input('dropdown', 'value')])
 def display_page(label):
-    if label == 'SUMMARY':
-        return summary.layout
-    if label == 'FPP':
+    # if label == 'FKP':
+    #     return FKP.layout
+    if label == 'a':
         return FPP.layout
     else:
         return "404 Page Error! Please choose a link"
