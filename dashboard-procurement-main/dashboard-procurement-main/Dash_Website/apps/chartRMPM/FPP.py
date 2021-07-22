@@ -215,32 +215,18 @@ def update_graph2(contents, filename, start_date, end_date):
         mask = (df['TGL'] >= start_date) & (
             df['TGL'] <= end_date)
         df_with_good_dates = df.loc[mask]
-        month_list = [i.strftime("%b-%y")
-                      for i in df_with_good_dates['TGL']]
-        print(type(month_list))
-        labels = sorted(set(month_list))
-        # labels = x.sort(key=lambda date: datetime.strptime(date, '%b-%Y'))
-        print(labels)
-        planning = df_with_good_dates[df_with_good_dates.tier1 == 'planning'].groupby(
-            [df_with_good_dates.TGL.dt.year, df_with_good_dates.TGL.dt.month]).agg({"tier1": "count"}).values
-        var = [i[0] for i in planning]
-        ADMINISTRASI = df_with_good_dates[df_with_good_dates.tier1 == 'ADMINISTRASI'].groupby(
-            [df_with_good_dates.TGL.dt.year, df_with_good_dates.TGL.dt.month]).agg({"tier1": "count"}).values
-        var1 = [i[0] for i in ADMINISTRASI]
+        planning = df_with_good_dates.loc[df_with_good_dates['tier1'] == 'planning'].count()[
+            0]
+        ADMINISTRASI = df_with_good_dates.loc[df_with_good_dates['tier1'] == 'ADMINISTRASI'].count()[
+            0]
+        NaN = df_with_good_dates.tier1.isnull().sum()
 
-        notnulindex = df_with_good_dates.dropna().index
-        varA = df_with_good_dates.loc[~df_with_good_dates.index.isin(
-            notnulindex)]
-
-        NaN = varA.groupby(
-            [df_with_good_dates.TGL.dt.year, df_with_good_dates.TGL.dt.month]).agg({"NO. PO": "count"}).values
-        var2 = [i[0] for i in NaN]
+        print(NaN)
+        labels = ['planning', 'ADMINISTRASI', 'NaN']
+        values = [planning, ADMINISTRASI, NaN]
 
         layout = go.Layout(title='Trend Category Per Bulan', barmode='stack')
-        fig1 = go.Figure(data=[
-            go.Bar(name='Planning', x=labels, y=var),
-            go.Bar(name='ADMINISTRASI', x=labels, y=var1),
-            go.Bar(name='NaN', x=labels, y=var2)
-        ])
+
+        fig1 = go.Figure([go.Bar(x=labels, y=values)])
 
     return fig1
