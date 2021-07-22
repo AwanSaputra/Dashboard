@@ -37,70 +37,115 @@ layout = html.Div([
         multiple=True
     ),
     html.Div(id='filename-summary'),
-    html.Div(dcc.Graph(
-        id='Mygraph1',
-    ), style={
-        "display": "inline-block",
-        "width": "30%"
-    }),
-    html.Div(dcc.Graph(
-        id='Mygraph2',
-    ), style={
-        "display": "inline-block",
-        "width": "30%"
-    }),
-    html.Div(dcc.Graph(
-        id='Mygraph3',
-    ), style={
-        "display": "inline-block",
-        "width": "30%"
-    }),
-    html.Div(dcc.Graph(
-        id='Mygraph4',
-    ), style={
-        "display": "inline-block",
-        "width": "50%"
-    }),
-    html.Div(dcc.Graph(
-        id='Mygraph5',
-    ), style={
-        "display": "inline-block",
-        "width": "50%"
-    }),
-    html.Div(dcc.Graph(
-        id='Mygraph6',
-    ), style={
-        "display": "block",
-        "width": "50%"
-    })
+
+    html.Div([
+        dcc.Tabs(id='tabs-example', value='tab-1', children=[
+            dcc.Tab(label='Value', value='tab-1'),
+            dcc.Tab(label='Supplier', value='tab-2'),
+        ]),
+        html.Div(id='tabs-example-content')
+    ])
 ])
+
+
+@app.callback(
+    Output("upload-data", "style"),
+    [Input("upload-data", "contents")]
+)
+def hide_upload(contents):
+    if contents is not None:
+        return {"display": "none"}
+    return dash.no_update
+
+
+@app.callback(Output('tabs-example-content', 'children'),
+              Input('tabs-example', 'value'),
+              Input('upload-data', 'filename'),
+              Input('upload-data', 'filename')
+              )
+def render_content(tab, contents, filename):
+    if contents:
+        contents = contents[0]
+        filename = filename[0]
+        print(filename)
+        print('diatas itu render content')
+        if filename != 'RTS Apr21.xlsx':
+            return html.Div([
+                'File yang anda input tidak bernama RTS Apr21.xlsx atau nama sheet tidak sesuai, mohon dicek kembali dan refresh page ! '
+            ])
+        else:
+            if tab == 'tab-1':
+                return html.Div([
+                    html.Div(dcc.Graph(
+                        id='Mygraph1',
+                    ), style={
+                        "display": "inline-block",
+                        "width": "30%"
+                    }),
+                    html.Div(dcc.Graph(
+                        id='Mygraph2',
+                    ), style={
+                        "display": "inline-block",
+                        "width": "30%"
+                    }),
+                    html.Div(dcc.Graph(
+                        id='Mygraph3',
+                    ), style={
+                        "display": "inline-block",
+                        "width": "30%"
+                    }),
+                ])
+            elif tab == 'tab-2':
+                return html.Div([
+                    html.Div(dcc.Graph(
+                        id='Mygraph4',
+                    ), style={
+                        "display": "inline-block",
+                        "width": "50%"
+                    }),
+                    html.Div(dcc.Graph(
+                        id='Mygraph5',
+                    ), style={
+                        "display": "inline-block",
+                        "width": "50%"
+                    }),
+                    html.Div(dcc.Graph(
+                        id='Mygraph6',
+                    ), style={
+                        "display": "block",
+                        "width": "50%"
+                    })
+                ])
 
 
 def parse_data(contents, filename):
     content_type, content_string = contents.split(',')
 
     decoded = base64.b64decode(content_string)
-    try:
-        if 'csv' in filename:
-            # Assume that the user uploaded a CSV or TXT file
-            df = pd.read_csv(
-                io.StringIO(decoded.decode('utf-8')))
-        elif 'xls' in filename:
-            # Assume that the user uploaded an excel file
-            df = pd.read_excel(io.BytesIO(decoded),
-                               sheet_name='SHP___Receiving_Transaction_Su_')
-        elif 'txt' or 'tsv' in filename:
-            # Assume that the user upl, delimiter = r'\s+'oaded an excel file
-            df = pd.read_csv(
-                io.StringIO(decoded.decode('utf-8')), delimiter=r'\s+')
-    except Exception as e:
-        print(e)
+    if filename != 'RTS Apr21.xlsx':
         return html.Div([
             'There was an error processing this file.'
         ])
-
-    print(df)
-    return df
+    else:
+        try:
+            if 'csv' in filename:
+                # Assume that the user uploaded a CSV or TXT file
+                df = pd.read_csv(
+                    io.StringIO(decoded.decode('utf-8')))
+            elif 'xls' in filename:
+                # Assume that the user uploaded an excel file
+                df = pd.read_excel(io.BytesIO(decoded),
+                                   sheet_name='SHP___Receiving_Transaction_Su_')
+            elif 'txt' or 'tsv' in filename:
+                # Assume that the user upl, delimiter = r'\s+'oaded an excel file
+                df = pd.read_csv(
+                    io.StringIO(decoded.decode('utf-8')), delimiter=r'\s+')
+        except Exception as e:
+            print(e)
+            return html.Div([
+                'There was an error processing this file.'
+            ])
+        return df
 
 
 @app.callback(Output('filename-summary', 'children'),
@@ -112,9 +157,11 @@ def parse_data(contents, filename):
 def update_output2(contents, filename):
     string_prefix = 'You have selected: '
     table = html.Div()
+    print("Sebelum if contents :", filename)
     if contents:
         contents = contents[0]
         filename = filename[0]
+        print("Sesudah if contents :", filename)
         string_prefix = string_prefix + filename
     if len(string_prefix) == len('You have selected: '):
         return 'Select a file to see it displayed here'
