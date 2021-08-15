@@ -19,7 +19,8 @@ layout = html.Div(children=[
         id='dropdown',
         options=[
             {'label': 'FPP', 'value': 'a'},
-            {'label': 'FKP', 'value': 'FKP'},
+            {'label': 'FKP', 'value': 'b'},
+            {'label': 'Monitor Buffer Stock', 'value': 'c'},
         ],
         value=''), style={
             "display": "inline-block",
@@ -37,5 +38,9 @@ def display_page(label):
     #     return FKP.layout
     if label == 'a':
         return FPP.layout
+    if label == 'b':
+        return FPP.layout
+    if label == 'c':
+        return FPP.layout
     else:
-        return "404 Page Error! Please choose a link"
+        return "Silahkan klik dropdown diatas dan pilih kategori!"

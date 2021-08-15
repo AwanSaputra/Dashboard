@@ -2,13 +2,14 @@ import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output
+from dash_html_components.Img import Img
 
 # Connect to main app.py file
 from app import app
 from app import server
 
 # Connect to your app pages
-from apps import PROC, RMPM, CLEARANCE, INMKT, RMPMSS, NONMKT
+from apps import PROC, RMPM, CLEARANCE, INMKT, RMPMSS, NONMKT, HOME
 
 SIDEBAR_STYLE = {
     "position": "fixed",
@@ -28,21 +29,26 @@ CONTENT_STYLE = {
 
 sidebar = html.Div(
     [
-        html.H2("Ini Logo", className="display-4"),
+        # html.H2("Ini Logo", className="display-4"),
+        # html.Img(src=app.get_asset_url(
+        #     'logo-kalbe.png'), className="img-logo"),
         html.Hr(),
         dbc.Nav(
             [
-                dbc.NavLink("Home", href="/", active="exact"),
+                dbc.NavLink("Home", href="/apps/HOME", active="exact"),
                 dbc.NavLink("PROC", href="/apps/PROC", active="exact"),
                 dbc.NavLink("RM/PM-SS", href="/apps/RMPMSS", active="exact"),
                 dbc.NavLink("RM/PM", href="/apps/RMPM", active="exact"),
-                dbc.NavLink("CLEARANCE", href="/apps/CLEARANCE", active="exact"),
-                dbc.NavLink("INDIRECT MKT", href="/apps/INMKT", active="exact"),
-                dbc.NavLink("INDIRECT NON MKT", href="/apps/NONMKT", active="exact"),
+                dbc.NavLink("CLEARANCE", href="/apps/CLEARANCE",
+                            active="exact"),
+                dbc.NavLink("INDIRECT MKT", href="/apps/INMKT",
+                            active="exact"),
+                dbc.NavLink("INDIRECT NON MKT",
+                            href="/apps/NONMKT", active="exact"),
             ],
             vertical=True,
             pills=True,
-            
+
         ),
     ],
     style=SIDEBAR_STYLE,
@@ -57,8 +63,6 @@ app.layout = html.Div([
 ])
 
 
-
-
 # app.layout = html.Div(children=[
 #     html.H1(children='Welcome To Procurement', style={
 #         "color": "red",
@@ -69,7 +73,7 @@ app.layout = html.Div([
 #     html.Div([
 #         dcc.Location(id='url', refresh=False),
 #         html.Div([
-#             dcc.Link('PROC', href='/apps/PROC', className="link"), 
+#             dcc.Link('PROC', href='/apps/PROC', className="link"),
 #             dcc.Link('RM/PM-SS', href='/apps/RMPMSS', className="link"),
 #             dcc.Link('RM/PM', href='/apps/RMPM', className="link"),
 #             dcc.Link('CLEARANCE', href='/apps/CLEARANCE', className="link"),
@@ -83,6 +87,8 @@ app.layout = html.Div([
 @ app.callback(Output('page-content', 'children'),
                [Input('url', 'pathname')])
 def display_page(pathname):
+    if pathname == '/apps/HOME':
+        return HOME.layout
     if pathname == '/apps/RMPM':
         return RMPM.layout
     if pathname == '/apps/PROC':
