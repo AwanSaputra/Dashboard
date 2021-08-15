@@ -7,7 +7,10 @@ import pathlib
 from app import app
 
 layout = html.Div(children=[
-    html.H1(children='Dashboard Welcome To Procurement', style={
+    html.H1(children='Dashboard', style={
+        "text-align": "center"
+    }),
+    html.H1(children='Welcome To Procurement', style={
         "text-align": "center"
     }),
 ])

@@ -6,7 +6,7 @@ import pandas as pd
 import pathlib
 from app import app
 
-from apps.chartRMPM import FPP
+from apps.chartRMPM import FPP, MBS
 
 
 layout = html.Div(children=[
@@ -41,6 +41,6 @@ def display_page(label):
     if label == 'b':
         return FPP.layout
     if label == 'c':
-        return FPP.layout
+        return MBS.layout
     else:
         return "Silahkan klik dropdown diatas dan pilih kategori!"

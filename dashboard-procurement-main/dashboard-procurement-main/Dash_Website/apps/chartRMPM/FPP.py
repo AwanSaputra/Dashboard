@@ -222,7 +222,6 @@ def update_graph2(contents, filename, start_date, end_date):
             0]
         NaN = df_with_good_dates.tier1.isnull().sum()
 
-        print(NaN)
         labels = ['planning', 'ADMINISTRASI', 'NaN']
         values = [planning, ADMINISTRASI, NaN]
 

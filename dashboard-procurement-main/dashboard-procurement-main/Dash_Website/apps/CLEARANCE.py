@@ -10,15 +10,7 @@ layout = html.Div(children=[
     html.H1(children='Clearance', style={
         "text-align": "center"
     }),
-    html.Div(dcc.Dropdown(
-        id='demo-dropdown',
-        options=[
-            {'label': 'FPP', 'value': 'FPP'},
-            {'label': 'FKP', 'value': 'FKP'},
-            {'label': 'SUMMARY', 'value': 'SUMMARY'}
-        ],
-        value='SUMMARY'), style={
-            "display": "block",
-            "width": "20%"
+    html.H3(children='Maintenance', style={
+        "text-align": "center"
     }),
 ])

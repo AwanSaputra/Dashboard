@@ -67,11 +67,9 @@ def render_content(tab, contents, filename):
     if contents:
         contents = contents[0]
         filename = filename[0]
-        print(filename)
-        print('diatas itu render content')
-        if filename != 'RTS Apr21.xlsx':
+        if filename[0:3] != 'RTS':
             return html.Div([
-                'File yang anda input tidak bernama RTS Apr21.xlsx atau nama sheet tidak sesuai, mohon dicek kembali dan refresh page ! '
+                'File yang anda input tidak bernama RTS  atau nama sheet tidak sesuai, mohon dicek kembali dan refresh page ! '
             ])
         else:
             if tab == 'tab-1':
@@ -155,8 +153,7 @@ def parse_data(contents, filename):
 )
 def update_output2(contents, filename):
     string_prefix = 'You have selected: '
-    table = html.Div()
-    print("Sebelum if contents :", filename)
+
     if contents:
         contents = contents[0]
         filename = filename[0]

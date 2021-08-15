@@ -30,8 +30,8 @@ CONTENT_STYLE = {
 sidebar = html.Div(
     [
         # html.H2("Ini Logo", className="display-4"),
-        # html.Img(src=app.get_asset_url(
-        #     'logo-kalbe.png'), className="img-logo"),
+        html.Img(src=app.get_asset_url(
+            'logo-kalbe.png'), className="img-logo"),
         html.Hr(),
         dbc.Nav(
             [
