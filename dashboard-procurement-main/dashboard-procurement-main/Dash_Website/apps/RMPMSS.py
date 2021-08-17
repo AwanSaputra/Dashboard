@@ -22,7 +22,7 @@ layout = html.Div(children=[
             {'label': 'Contract Coverage per Supplier Category', 'value': 'c'},
             {'label': 'Spending by Category', 'value': 'd'}
         ],
-        value='a'), style={
+        value=''), style={
             "display": "inline-block",
             "width": "20%"
     }),
@@ -45,4 +45,4 @@ def display_page(label):
     if label == 'd':
         return spending.layout
     else:
-        return "404 Page Error! Please choose a link"
+        return "Silahkan klik dropdown diatas dan pilih kategori!"

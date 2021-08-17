@@ -102,7 +102,7 @@ def display_page(pathname):
     if pathname == '/apps/NONMKT':
         return NONMKT.layout
     else:
-        return "404 Page Error! Please choose a link"
+        return HOME.layout
 
 
 if __name__ == '__main__':

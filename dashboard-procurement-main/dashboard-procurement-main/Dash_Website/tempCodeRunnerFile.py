@@ -1,1 +1,1 @@
-pathname
+className="img-logo"

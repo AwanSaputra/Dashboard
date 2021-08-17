@@ -13,4 +13,7 @@ layout = html.Div(children=[
     html.H1(children='Welcome To Procurement', style={
         "text-align": "center"
     }),
+    html.Img(src=app.get_asset_url(
+        'connect.jpg'), className="img-logo2"),
+
 ])

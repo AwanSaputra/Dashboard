@@ -203,3 +203,22 @@ def display_page(label):
         }),
     else:
         return "404 Page Error! Please choose a link"
+
+
+@app.callback(Output('filename-MBS', 'children'),
+              [
+    Input('upload-dataMBS', 'contents'),
+    Input('upload-dataMBS', 'filename')
+]
+)
+def update_output2(contents, filename):
+    string_prefix = 'You have selected: '
+    table = html.Div()
+    if contents:
+        contents = contents[0]
+        filename = filename[0]
+        string_prefix = string_prefix + filename
+    if len(string_prefix) == len('You have selected: '):
+        return 'Select a file to see it displayed here'
+    else:
+        return string_prefix
