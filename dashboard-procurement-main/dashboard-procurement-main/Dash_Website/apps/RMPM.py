@@ -6,26 +6,20 @@ import pandas as pd
 import pathlib
 from app import app
 
-from apps.chartRMPM import FPP, MBS
+from apps.chartRMPM import FPP
 
 
 layout = html.Div(children=[
 
-    html.H1(children='RMPM', style={
-        "text-align": "center"
-    }),
+    html.H1(children='RMPM', className="layout"),
 
     html.Div(dcc.Dropdown(
         id='dropdown',
         options=[
             {'label': 'FPP', 'value': 'a'},
-            {'label': 'FKP', 'value': 'b'},
-            {'label': 'Monitor Buffer Stock', 'value': 'c'},
+            {'label': 'FKP', 'value': 'FKP'},
         ],
-        value=''), style={
-            "display": "inline-block",
-            "width": "20%"
-    }),
+        value=''), className="dropdown__menu"),
 
     html.Div(id='chart-content', children=[])
 ])
@@ -38,9 +32,5 @@ def display_page(label):
     #     return FKP.layout
     if label == 'a':
         return FPP.layout
-    if label == 'b':
-        return FPP.layout
-    if label == 'c':
-        return MBS.layout
     else:
-        return "Silahkan klik dropdown diatas dan pilih kategori!"
+        return "404 Page Error! Please choose a link"

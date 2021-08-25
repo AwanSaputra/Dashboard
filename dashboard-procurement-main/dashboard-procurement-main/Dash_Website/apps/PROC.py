@@ -5,12 +5,15 @@ import plotly.express as px
 import pandas as pd
 import pathlib
 from app import app
-A = ['FPP', 'FKP', 'MBS']
+
 layout = html.Div(children=[
-    html.H1(children='PROC', style={
-        "text-align": "center"
-    }),
-    html.H3(children='Maintenance', style={
-        "text-align": "center"
-    }),
+    html.H1(children='PROC', className="layout"),
+    html.Div(dcc.Dropdown(
+        id='demo-dropdown',
+        options=[
+            {'label': 'FPP', 'value': 'FPP'},
+            {'label': 'FKP', 'value': 'FKP'},
+            {'label': 'SUMMARY', 'value': 'SUMMARY'}
+        ],
+        value='SUMMARY'), className="dropdown__menu"),
 ])
